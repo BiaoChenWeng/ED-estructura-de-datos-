@@ -25,7 +25,6 @@ class Polinomio {
 			int m = (ini + fin - 1) / 2;
 			if (v[m].second < busqueda) {
 				return busquedaBinaria(m + 1, fin, busqueda);
-
 			}
 			else {
 				return busquedaBinaria(ini, m + 1, busqueda);
@@ -38,11 +37,21 @@ public:
 
 	void meter(int coeficiente, int exponente) {
 		int pos=busquedaBinaria(0, v.size(), exponente);
-		v.push_back(make_pair(0, 0));
-		for (int i = v.size() - 1; i > pos; i--) {
-			v[i] = v[i - 1];
+		if (pos < v.size()) {
+			if (v[pos].second != exponente) {
+				v.push_back(make_pair(0, 0));
+				for (int i = v.size() - 1; i > pos; i--) {
+					v[i] = v[i - 1];
+				}
+				v[pos] = make_pair(coeficiente, exponente);
+			}
+			else {
+				v[pos].first += coeficiente;
+			}
 		}
-		v[pos] = make_pair(coeficiente, exponente);
+		else {
+			v.push_back(make_pair(coeficiente, exponente));
+		}
 	}
 
 	int calcular(int x) {
@@ -53,29 +62,18 @@ public:
 
 		return suma;
 	}
-
-	
-
 };
 
-inline istream& operator>>(istream& in, Polinomio& a) {
-	
+inline istream& operator>>(istream& in, Polinomio& a) {	
 	int coe, exp;
 	in >> coe >> exp;
 	if (!in)
 		return in;
-
 	while ((coe != 0 || exp != 0) && in) {
 		a.meter(coe, exp);
 		in >> coe >> exp;
-	}
-	
-	 
+	} 
 	return in;
 }
 
-
 #endif // !Class.h
-
-
-
