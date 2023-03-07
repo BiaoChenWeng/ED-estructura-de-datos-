@@ -52,7 +52,16 @@ info recorrerArbol(const bintree<T> & arbol) {
         der = recorrerArbol(arbol.right());
         
         return { max(izq.altura, der.altura) + 1,izq.nodo+der.nodo+1,(izq.hoja==der.hoja && der.hoja==0)?(1):(izq.hoja+der.hoja)};
-
+         /*
+        izq.altura = max(izq.altura,der.altura)+1;
+        izq.nodo = der.nodo + izq.nodo+1;
+        if(izq.hoja== der.hoja && der.hoja ==0){
+            izq.hoja=1;
+        }
+        else
+            izq.hoja= izq.hoja+der.hoja;
+        return izq; // hace lo mismo que el return de abajo    
+        */
     }
 }
 
